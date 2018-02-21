@@ -1,6 +1,8 @@
 // Store our API endpoint inside queryUrl
 var earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
+var tectonicPlatesURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
+
 // Perform a GET request to the query URL
 d3.json(earthquakeURL, function(data) {
   // Once we get a response, send the data.features object to the createFeatures function
@@ -53,28 +55,41 @@ function createMap(earthquakes) {
       "T6YbdDixkOBWH_k9GbS8JQ");
   
     // Define a baseMaps object to hold our base layers
-    
-    // Create our map, giving it the streetmap and earthquakes layers to display on load
-    var myMap = L.map("map", {
-      center: [
-        37.09, -95.71
-      ],
-      zoom: 3.25,
-      layers: [outdoors, earthquakes]
-    });
-  
-    // Create a layer control
-    // Pass in our baseMaps and overlayMaps
+    // Pass in our baseMaps 
     var baseMaps = {
       "Outdoors": outdoors,
       "Satellite": satellite,
       "Dark Map": darkmap
     };
-  
+
+    // Creat a layer for the tectonic plates
+    var tectonicPlates = new L.LayerGroup();
+
     // Create overlay object to hold our overlay layer
     var overlayMaps = {
-      "Earthquakes": earthquakes
+      "Earthquakes": earthquakes,
+      "Tectonic Plates": tectonicPlates
     };
+
+    // Create our map, giving it the outdoors, earthquakes and tectonic plates layers to display on load
+    var myMap = L.map("map", {
+      center: [
+        37.09, -95.71],
+      zoom: 3.25,
+      layers: [outdoors, earthquakes, tectonicPlates]
+    }); 
+
+    // Add Fault lines data
+    d3.json(tectonicPlatesURL, function(plateData) {
+      // Adding our geoJSON data, along with style information, to the tectonicplates
+      // layer.
+      L.geoJson(plateData, {
+        color: "blue",
+        weight: 2
+      })
+      .addTo(tectonicPlates);
+  });
+
   
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {

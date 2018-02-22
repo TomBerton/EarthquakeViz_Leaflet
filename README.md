@@ -5,4 +5,7 @@
 
 - Using JavaScript and [Leaflet](http://leafletjs.com/) I mapped the past 7 days of Earthqake data. 
 
-
+-----
+<p align="center"> 
+  <img src="https://github.com/TomBerton/Earthquake_Visualization/blob/master/images/Earthquake_website.png" width="500"/>
+ </p>

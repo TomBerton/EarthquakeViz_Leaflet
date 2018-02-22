@@ -7,5 +7,5 @@
 
 -----
 <p align="center"> 
-  <img src="https://github.com/TomBerton/Earthquake_Visualization/blob/master/images/Earthquake_website.png" width="500"/>
+  <img src="https://github.com/TomBerton/Earthquake_Visualization/blob/master/images/Earthquake_website.png" width="900"/>
  </p>
